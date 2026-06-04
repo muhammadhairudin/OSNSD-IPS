@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUARA OSN — Latihan IPS SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a2238; --paper:#fbf7ef; --paper2:#f3ecdd;
+  --gold:#c8932a; --gold-soft:#e8c876; --maroon:#8c2f2a; --green:#2f6e4f;
+  --blue:#274472; --line:#d9cfba; --muted:#6b6354;
+  --shadow:0 10px 30px rgba(40,30,10,.12);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, #fdf3d8 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, #efe6d0 0%, transparent 50%),
+    var(--paper);
+  min-height:100%;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px;margin:0 auto;padding:24px 18px 80px}
+.serif{font-family:'Fraunces',serif}
+.btn{
+  font-family:'Plus Jakarta Sans';font-weight:700;font-size:16px;cursor:pointer;
+  border:none;border-radius:14px;padding:15px 26px;transition:.18s transform,.18s box-shadow;
+}
+.btn:active{transform:translateY(1px)}
+.btn-gold{background:linear-gradient(180deg,#dca93e,#b9831f);color:#fff;box-shadow:0 8px 18px rgba(184,131,31,.35)}
+.btn-gold:hover{box-shadow:0 12px 26px rgba(184,131,31,.45)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{background:#fff8}
+.card{background:#fffdf8;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hidden{display:none!important}
+
+/* HOME */
+.crest{
+  width:96px;height:96px;margin:0 auto 18px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold));
+  display:grid;place-items:center;color:#3a2a06;box-shadow:0 12px 30px rgba(200,147,42,.4), inset 0 -6px 12px rgba(120,80,10,.3);
+  position:relative;
+}
+.crest::after{content:"";position:absolute;inset:7px;border:2px dashed rgba(255,255,255,.55);border-radius:50%}
+.crest span{font-family:'Fraunces';font-weight:900;font-size:40px;position:relative}
+.hero{text-align:center;padding:46px 22px 30px}
+.kicker{letter-spacing:.32em;text-transform:uppercase;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:10px}
+.hero h1{font-family:'Fraunces';font-weight:900;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--maroon)}
+.hero p{color:var(--muted);max-width:520px;margin:16px auto 0;font-size:16px}
+.stat-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px 0 6px}
+.stat{background:#fffdf8;border:1px solid var(--line);border-radius:14px;padding:14px 20px;min-width:120px;text-align:center}
+.stat b{font-family:'Fraunces';font-size:28px;display:block;color:var(--ink)}
+.stat small{color:var(--muted);font-size:12.5px;letter-spacing:.04em}
+.cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.howto{margin-top:38px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.howto .card{padding:20px}
+.howto .num{font-family:'Fraunces';font-weight:900;color:var(--gold);font-size:22px}
+.howto h4{margin:6px 0 4px;font-size:15px}
+.howto p{font-size:13.5px;color:var(--muted)}
+.best{margin-top:26px;text-align:center;font-size:13.5px;color:var(--muted)}
+
+/* QUIZ */
+.topbar{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.progress{flex:1;height:10px;background:var(--paper2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));width:0;transition:width .35s}
+.qmeta{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
+.qcard{padding:26px 24px}
+.qcat{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:#eaf0f7;border:1px solid #d3ddec;padding:5px 12px;border-radius:99px;margin-bottom:16px}
+.qtext{font-family:'Fraunces';font-weight:600;font-size:21px;line-height:1.4;margin-bottom:22px}
+.qtext .qstem{display:block}
+.qtext .qstem + .qblock,.qtext .qblock + .qtask{margin-top:14px}
+/* daftar pernyataan bernomor (1)(2)(3) */
+.stmt-list{font-family:'Plus Jakarta Sans';font-weight:500;font-size:16px;line-height:1.5;
+  list-style:none;counter-reset:none;margin:14px 0;border-left:3px solid var(--gold-soft);
+  background:#fbf6ea;border-radius:0 12px 12px 0;padding:10px 14px 10px 6px}
+.stmt-list li{display:flex;gap:10px;align-items:flex-start;padding:6px 8px}
+.stmt-list li .no{flex:none;min-width:26px;height:26px;padding:0 6px;border-radius:7px;
+  background:#fff;border:1px solid var(--line);display:grid;place-items:center;
+  font-weight:800;font-size:13px;color:var(--blue)}
+/* dua-pernyataan A/B */
+.stmt-pair{display:grid;gap:10px;margin:14px 0}
+.stmt-pair .pp{display:flex;gap:12px;background:#fbf6ea;border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;font-family:'Plus Jakarta Sans';font-weight:500;font-size:15.5px;line-height:1.5}
+.stmt-pair .pp .badge{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  font-family:'Fraunces';font-weight:900;font-size:15px;color:#fff;background:var(--blue)}
+.stmt-pair .pp.b .badge{background:var(--maroon)}
+/* tabel menjodohkan */
+.match-grid{display:grid;grid-template-columns:auto 1fr;gap:0;margin:14px 0;border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;font-family:'Plus Jakarta Sans';font-size:15px}
+.match-grid .row{display:contents}
+.match-grid .c{padding:11px 14px;border-bottom:1px solid var(--line);line-height:1.45}
+.match-grid .row:last-child .c{border-bottom:none}
+.match-grid .c.k{font-weight:800;color:var(--blue);background:#fbf6ea;border-right:1px solid var(--line);white-space:nowrap}
+.match-opts{margin:12px 0 2px}
+.match-opts .lbl{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.match-opts .chips{display:flex;flex-wrap:wrap;gap:8px}
+.match-opts .chip{background:#eaf0f7;border:1px solid #d3ddec;border-radius:8px;padding:5px 11px;font-size:13.5px;font-weight:600;color:var(--blue)}
+.qtask{font-family:'Fraunces';font-weight:600;font-size:18px;line-height:1.4;color:var(--ink);margin-top:14px}
+.opt{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:11px;cursor:pointer;transition:.14s;font-size:15.5px;font-family:inherit;color:var(--ink)}
+.opt:hover{border-color:var(--gold);background:#fffaf0}
+.opt .lab{flex:none;width:30px;height:30px;border-radius:9px;background:var(--paper2);display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--ink);border:1px solid var(--line)}
+.opt.sel{border-color:var(--gold);background:#fff6e2}
+.opt.sel .lab{background:var(--gold);color:#fff;border-color:var(--gold)}
+.opt.correct{border-color:var(--green);background:#eef7f0}
+.opt.correct .lab{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.wrong{border-color:var(--maroon);background:#fbeeed}
+.opt.wrong .lab{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+.opt:disabled{cursor:default}
+.explain{margin-top:16px;border-radius:14px;padding:16px 18px;border:1px solid var(--line);background:#f7f2e6;animation:fade .3s}
+.explain h5{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.explain .res{font-weight:800;margin-bottom:8px}
+.explain .res.ok{color:var(--green)}
+.explain .res.no{color:var(--maroon)}
+.explain p{font-size:14.5px;color:#3a3528}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.navrow{display:flex;justify-content:space-between;gap:12px;margin-top:18px}
+
+/* RESULT */
+.score-hero{text-align:center;padding:38px 22px 26px}
+.medal{width:120px;height:120px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;font-size:54px;box-shadow:var(--shadow)}
+.ring{font-family:'Fraunces';font-weight:900;font-size:60px;line-height:1}
+.verdict{font-family:'Fraunces';font-weight:900;font-size:26px;margin-top:8px}
+.verdict.win{color:var(--green)} .verdict.mid{color:var(--gold)} .verdict.low{color:var(--maroon)}
+.subscore{color:var(--muted);margin-top:6px;font-size:15px}
+.bars{padding:8px 6px 4px}
+.bars h3{font-family:'Fraunces';font-size:18px;margin:18px 6px 10px}
+.bar{display:flex;align-items:center;gap:12px;margin:8px 6px;font-size:13.5px}
+.bar .nm{width:42%;color:var(--ink);font-weight:600}
+.bar .track{flex:1;height:12px;background:var(--paper2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar .track i{display:block;height:100%;border-radius:99px}
+.bar .pc{width:46px;text-align:right;font-weight:700;color:var(--muted)}
+.review{padding:6px}
+.review h3{font-family:'Fraunces';font-size:18px;margin:20px 6px 8px}
+.rev-item{border:1px solid var(--line);border-radius:14px;padding:16px;margin:10px 0;background:#fffdf8}
+.rev-item.ok{border-left:5px solid var(--green)}
+.rev-item.no{border-left:5px solid var(--maroon)}
+.rev-q{font-weight:700;font-size:14.5px;margin-bottom:10px}
+.rev-line{font-size:13.5px;margin:3px 0}
+.rev-line .tag{font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.rev-line.your .tag{color:var(--maroon)} .rev-line.your.match .tag{color:var(--green)}
+.rev-line.key .tag{color:var(--green)}
+.rev-exp{font-size:13px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.footer-note{text-align:center;color:var(--muted);font-size:12.5px;margin-top:30px;line-height:1.7}
+
+/* PROFIL & RIWAYAT */
+.profile-bar{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.profile-bar .who{font-size:14px;color:var(--muted)}
+.profile-bar .who b{color:var(--ink)}
+.linkbtn{background:none;border:none;color:var(--blue);font-weight:700;cursor:pointer;font-size:13.5px;font-family:inherit;text-decoration:underline;text-underline-offset:3px}
+.name-modal{position:fixed;inset:0;background:rgba(26,34,56,.5);display:grid;place-items:center;z-index:50;padding:20px}
+.name-box{background:#fffdf8;border-radius:18px;padding:28px;max-width:380px;width:100%;box-shadow:var(--shadow);text-align:center}
+.name-box h3{font-family:'Fraunces';font-size:22px;margin-bottom:8px}
+.name-box p{color:var(--muted);font-size:14px;margin-bottom:16px}
+.name-box input{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font-size:16px;font-family:inherit;margin-bottom:14px}
+.name-box input:focus{outline:none;border-color:var(--gold)}
+
+.hist-head{text-align:center;padding:30px 18px 8px}
+.hist-head h2{font-family:'Fraunces';font-weight:900;font-size:32px}
+.hist-head p{color:var(--muted);margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.kpi{background:#fffdf8;border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center}
+.kpi b{font-family:'Fraunces';font-size:24px;display:block;color:var(--ink)}
+.kpi small{color:var(--muted);font-size:11.5px;letter-spacing:.03em}
+@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.chart-card{padding:22px 18px}
+.chart-card h3{font-family:'Fraunces';font-size:18px;margin-bottom:4px}
+.chart-card .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+.chartwrap{width:100%;overflow-x:auto}
+svg.linechart{display:block;min-width:320px;width:100%;height:auto}
+.empty{text-align:center;padding:46px 20px;color:var(--muted)}
+.empty .big{font-size:46px;margin-bottom:10px}
+.sesi-list{padding:6px}
+.sesi-list h3{font-family:'Fraunces';font-size:18px;margin:18px 6px 8px}
+.sesi{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:9px 0;background:#fffdf8}
+.sesi .dot{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:'Fraunces';font-weight:900;font-size:16px;color:#fff}
+.sesi .meta{flex:1;min-width:0}
+.sesi .meta .top{font-weight:700;font-size:15px}
+.sesi .meta .bot{font-size:12.5px;color:var(--muted);margin-top:2px}
+.sesi .pill{flex:none;font-size:11.5px;font-weight:800;padding:5px 10px;border-radius:99px}
+.sesi .pill.win{background:#eef7f0;color:var(--green)}
+.sesi .pill.low{background:#fbeeed;color:var(--maroon)}
+.weak-card{padding:22px 18px;margin-top:14px}
+.weak-card h3{font-family:'Fraunces';font-size:18px;margin-bottom:4px}
+.danger-zone{margin-top:22px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <section id="home">
+    <div class="hero">
+      <div class="crest"><span>J</span></div>
+      <div class="kicker">Jalan Menuju Juara</div>
+      <h1>JUARA <em>OSN</em><br>IPS Sekolah Dasar</h1>
+      <p>Latihan terstruktur menuju Olimpiade Sains Nasional. Kerjakan 30 soal per sesi, pelajari pembahasan tiap nomor, dan dapatkan rapor lengkap di akhir.</p>
+      <div class="stat-row">
+        <div class="stat"><b id="st-bank">0</b><small>BANK SOAL</small></div>
+        <div class="stat"><b>30</b><small>SOAL / SESI</small></div>
+        <div class="stat"><b id="st-best">—</b><small>SKOR TERBAIK</small></div>
+      </div>
+      <div class="cta">
+        <button class="btn btn-gold" onclick="startQuiz()">Mulai Latihan</button>
+        <button class="btn btn-ghost" onclick="showHistory()">📊 Riwayat &amp; Rapor</button>
+      </div>
+      <div class="profile-bar" style="margin-top:18px">
+        <span class="who">Pelajar: <b id="who-name">—</b></span>
+        <button class="linkbtn" onclick="openNameModal()">ganti nama</button>
+      </div>
+    </div>
+
+    <div class="howto" id="howto">
+      <div class="card"><div class="num">01</div><h4>Acak & Adil</h4><p>30 soal dipilih acak dari seluruh bank soal tiap sesi, jadi latihan tidak monoton.</p></div>
+      <div class="card"><div class="num">02</div><h4>Belajar Saat Salah</h4><p>Pembahasan langsung muncul setelah menjawab — pahami konsepnya, bukan hafal kunci.</p></div>
+      <div class="card"><div class="num">03</div><h4>Rapor Per Bidang</h4><p>Lihat penguasaan tiap topik (Sejarah, Ekonomi, Geografi, Sosial) untuk fokus belajar.</p></div>
+      <div class="card"><div class="num">04</div><h4>Standar Juara</h4><p>Lulus di ambang ≥ 80%. Konsisten lulus = siap bersaing di tingkat nasional.</p></div>
+    </div>
+    <p class="best">📚 Materi: Sejarah, Geografi, Ekonomi, dan Sosial-Budaya Indonesia</p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" class="hidden">
+    <div class="topbar">
+      <button class="btn btn-ghost" style="padding:10px 16px;font-size:14px" onclick="confirmQuit()">← Keluar</button>
+      <div class="progress"><i id="bar"></i></div>
+      <div class="qmeta"><span id="qnum">1</span>/<span id="qtot">30</span> · <span id="score">0</span>✓</div>
+    </div>
+    <div class="card qcard">
+      <span class="qcat" id="cat">Kategori</span>
+      <div class="qtext serif" id="qtext">Soal...</div>
+      <div id="opts"></div>
+      <div id="explain" class="explain hidden">
+        <h5>Pembahasan</h5>
+        <div class="res" id="resline"></div>
+        <p id="exptext"></p>
+      </div>
+      <div class="navrow">
+        <span></span>
+        <button class="btn btn-gold hidden" id="nextbtn" onclick="nextQ()">Lanjut →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="result" class="hidden">
+    <div class="card">
+      <div class="score-hero">
+        <div class="medal" id="medal">🏅</div>
+        <div class="ring" id="ring">0%</div>
+        <div class="verdict" id="verdict">—</div>
+        <div class="subscore" id="subscore">—</div>
+      </div>
+      <div class="bars" id="bars"></div>
+    </div>
+    <div class="review card" id="reviewBox"></div>
+    <div class="cta" style="margin-top:24px">
+      <button class="btn btn-gold" onclick="startQuiz()">Latihan Lagi</button>
+      <button class="btn btn-ghost" onclick="showHistory()">📊 Riwayat</button>
+      <button class="btn btn-ghost" onclick="goHome()">Beranda</button>
+    </div>
+    <p class="footer-note">Untuk jadi juara: ulangi sampai konsisten ≥ 80%, dan fokuskan belajar pada bidang dengan batang merah/pendek di rapor. Setiap soal yang salah adalah materi yang sedang kamu kuasai. Semangat! 🇮🇩</p>
+  </section>
+
+  <!-- ============ HISTORY / RAPOR ============ -->
+  <section id="history" class="hidden">
+    <div class="topbar">
+      <button class="btn btn-ghost" style="padding:10px 16px;font-size:14px" onclick="goHome()">← Beranda</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost" style="padding:10px 16px;font-size:14px" onclick="startQuiz()">Latihan Baru</button>
+    </div>
+    <div class="hist-head">
+      <h2 class="serif">Rapor Belajar</h2>
+      <p id="hist-sub">Perkembangan hasil latihan</p>
+    </div>
+    <div id="hist-content"></div>
+    <div class="danger-zone">
+      <button class="linkbtn" style="color:var(--maroon)" onclick="resetData()">Hapus semua riwayat</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- modal nama -->
+<div id="nameModal" class="name-modal hidden">
+  <div class="name-box">
+    <h3 class="serif">Siapa yang berlatih?</h3>
+    <p>Nama dipakai untuk menyimpan rapor di perangkat ini.</p>
+    <input id="nameInput" type="text" placeholder="Nama anak..." maxlength="40">
+    <button class="btn btn-gold" style="width:100%" onclick="saveName()">Simpan</button>
+  </div>
+</div>
+
+<script>
+const BANK = [{"id": 1, "kategori": "Geografi & Kependudukan", "soal": "Perhatikan pernyataan berikut! (1) Terjadinya kemiskinan di daerah pedesaan (2) Terbatasnya fasilitas pendidikan, kesehatan, dan lainnya di pedesaan (3) Terbatasnya lapangan pekerjaan di pedesaan (4) Terjadinya kesenjangan tempat tinggal (5) Lengkapnya fasilitas pendidikan, kesehatan, dan lainnya di kota. Pernyataan yang paling tepat untuk menggambarkan faktor pendorong urbanisasi adalah...", "opsi": ["(1), (2), dan (3)", "(1), (3), dan (4)", "(2), (4), dan (5)", "(3), (4), dan (5)"], "jawaban": 0, "pembahasan": "Faktor pendorong adalah kondisi negatif dari desa (kemiskinan, minimnya fasilitas, sulitnya lapangan kerja) yang mendesak penduduk untuk pindah ke kota. Sedangkan kondisi positif di kota disebut faktor penarik."}, {"id": 2, "kategori": "Geografi & Lingkungan", "soal": "Perhatikan pernyataan berikut! (1) Banjir dapat terjadi karena banyak hutan yang ditebang (2) Pembangunan kota yang tidak teratur dapat menyebabkan banjir (3) Terjadinya perubahan wilayah tidak mengakibatkan bencana banjir (4) Menanam pohon dapat membantu mengurangi bencana banjir. Urutan benar (B) dan salah (S) yang tepat adalah...", "opsi": ["B-B-S-B", "B-S-B-B", "S-S-B-B", "S-B-B-S"], "jawaban": 0, "pembahasan": "Hutan ditebang berdampak banjir (Benar), tata kota buruk menyebabkan banjir (Benar), perubahan wilayah tidak berdampak (Salah), penanaman pohon mengurangi risiko (Benar). Urutan: B-B-S-B."}, {"id": 3, "kategori": "Geografi & Lingkungan", "soal": "Daerah pegunungan dikenal dengan udara sejuk serta daerah perkebunan. Selain itu, di daerah pegunungan memiliki keragaman potensi wisata alam, seperti air terjun dan tempat perkemahan. Kenampakan alam yang terdapat di daerah tersebut adalah...", "opsi": ["Dataran rendah", "Dataran tinggi", "Pantai", "Sungai"], "jawaban": 1, "pembahasan": "Daerah berudara sejuk dengan sentra perkebunan teh/kopi dan pariwisata alam (air terjun) merupakan karakteristik kenampakan alam wilayah dataran tinggi."}, {"id": 4, "kategori": "Geografi & Lingkungan", "soal": "Indonesia terletak di sekitar garis khatulistiwa dan memiliki curah hujan yang tinggi, sehingga dikenal dengan iklim...", "opsi": ["Laut", "Basah", "Tropis", "Muson"], "jawaban": 2, "pembahasan": "Karena secara geografis terletak di garis khatulistiwa dan menerima curah hujan serta sinar matahari tinggi sepanjang tahun, Indonesia beriklim tropis."}, {"id": 5, "kategori": "Geografi & Lingkungan", "soal": "Berikut ini dampak dari penebangan hutan yang berlebihan adalah...", "opsi": ["Menaikkan kualitas oksigen di bumi", "Menurunkan emisi karbon", "Menyebabkan bencana kekeringan", "Meningkatkan jumlah serapan air"], "jawaban": 2, "pembahasan": "Penebangan pohon secara liar (deforestasi) menghilangkan daerah resapan air alami, sehingga menyebabkan risiko kekeringan ekstrem di musim kemarau dan banjir bandang di musim hujan."}, {"id": 6, "kategori": "Ekonomi & SDA", "soal": "Sumber daya alam dapat digolongkan menjadi yang dapat diperbaharui dan tidak dapat diperbaharui. Berikut ini contoh sumber daya alam yang tidak dapat diperbaharui adalah...", "opsi": ["Angin", "Air", "Kayu", "Logam"], "jawaban": 3, "pembahasan": "Mineral dan logam (emas, tembaga, besi) merupakan hasil proses geologis yang memakan waktu jutaan tahun, sehingga jumlahnya terbatas dan tidak dapat diperbaharui dengan cepat."}, {"id": 7, "kategori": "Pemerintahan & Negara", "soal": "Contoh pemekaran wilayah di Indonesia akibat dari otonomi daerah adalah...", "opsi": ["Papua yang dimekarkan menjadi 6 provinsi", "Jawa yang dimekarkan menjadi 4 provinsi", "Sumatera yang dimekarkan menjadi 8 provinsi", "Sulawesi yang dimekarkan menjadi 3 provinsi"], "jawaban": 0, "pembahasan": "Berdasarkan kebijakan otonomi daerah terbaru, Provinsi Papua dimekarkan menjadi 6 provinsi: Papua, Papua Barat, Papua Selatan, Papua Tengah, Papua Pegunungan, dan Papua Barat Daya."}, {"id": 8, "kategori": "Sosial & Lembaga", "soal": "Semangat dan bersungguh-sungguh dalam belajar bisa membuat kita pintar dan mendapatkan prestasi seperti juara OSN Tingkat Nasional. Salah satu fungsi Lembaga Pendidikan yaitu...", "opsi": ["Memberikan pengetahuan dan keterampilan", "Memberikan layanan kesehatan masyarakat", "Melestarikan dan mengembangkan kebudayaan", "Mengatur dan mengelola kehidupan masyarakat"], "jawaban": 0, "pembahasan": "Sekolah sebagai lembaga pendidikan berfungsi untuk mentransfer ilmu pengetahuan serta melatih keterampilan siswa agar mampu berprestasi."}, {"id": 9, "kategori": "Sosial & Keberagaman", "soal": "Masyarakat Indonesia terdiri dari berbagai suku bangsa dan agama yang berbeda-beda. Dalam melakukan interaksi, seharusnya kita bersikap...", "opsi": ["Berteman berdasarkan agama yang sama", "Bergaul dengan teman dari suku yang sama", "Mengajak teman untuk beribadah sesuai agama kita", "Menghargai perbedaan dan berteman dengan baik"], "jawaban": 3, "pembahasan": "Dalam masyarakat majemuk (multikultural), sikap yang paling tepat untuk menjaga persatuan adalah menjunjung tinggi toleransi, menghargai perbedaan, dan berteman tanpa memandang SARA."}, {"id": 10, "kategori": "Ekonomi & SDA", "soal": "Amir ingin membeli rumah, namun dana yang dimiliki tidak cukup, akhirnya ia mengajukan kredit ke bank. Pernyataan di bawah ini yang menunjukkan fungsi bank adalah...", "opsi": ["Perantara dalam pembayaran", "Tempat menghimpun dana masyarakat", "Pembiayaan investasi perusahaan", "Tempat penukaran uang masyarakat"], "jawaban": 2, "pembahasan": "Bank berfungsi sebagai lembaga intermediasi. Pengajuan kredit untuk membeli rumah merupakan aktivitas penyaluran dana (pembiayaan) kepada masyarakat/nasabah."}, {"id": 11, "kategori": "Sosial & Teknologi", "soal": "Perhatikan pernyataan berikut! (1) Menghormati perbedaan pendapat di media sosial (2) Menghindari penyebaran hoaks dan ujaran kebencian (3) Mengatur waktu penggunaan gadget agar tidak berlebihan (4) Menyaring informasi yang diterima sebelum disebarkan (5) Mencermati informasi dari berbagai sumber yang terpercaya. Perilaku untuk mengurangi dampak teknologi melalui literasi digital adalah...", "opsi": ["(1), (2), dan (3)", "(1), (2), dan (5)", "(2), (4), dan (5)", "(3), (4), dan (5)"], "jawaban": 2, "pembahasan": "Kompetensi dasar literasi digital meliputi menghindari penyebaran berita palsu/hoaks (2), menyaring informasi dengan bijak (4), dan memastikan validitas sumber (5)."}, {"id": 12, "kategori": "Sosial & Norma", "soal": "Zebra cross merupakan tempat menyeberang di jalan raya untuk menjaga ketertiban dan keselamatan berlalu lintas. Sikap yang tepat berdasarkan hal tersebut adalah...", "opsi": ["Menggunakan zebra cross jika ada polisi yang mengawasi", "Tidak perlu menggunakan zebra cross karena sudah pandai menyeberang", "Menggunakan zebra cross untuk mematuhi norma di jalan raya", "Sesekali menggunakan zebra cross jika dibutuhkan"], "jawaban": 2, "pembahasan": "Menyeberang jalan pada tempat yang disediakan (zebra cross) adalah wujud kesadaran masyarakat dalam mematuhi norma dan hukum positif yang berlaku."}, {"id": 13, "kategori": "Sosial & Globalisasi", "soal": "Pernyataan A: Perubahan pola konsumsi terjadi karena keterbukaan informasi dan banyaknya tempat yang menyajikan makanan khas luar negeri. Pernyataan B: Saat ini sebagian masyarakat mengonsumsi makanan khas dari luar negeri, seperti pizza, burger, ramen, sushi. Hubungan dua pernyataan yang tepat adalah...", "opsi": ["A benar, B benar, dan keduanya saling berhubungan", "A benar, B benar, tetapi tidak saling berhubungan", "A benar, B salah", "A salah, B benar"], "jawaban": 0, "pembahasan": "Keterbukaan informasi akibat globalisasi memengaruhi selera masyarakat terhadap budaya luar. Kedua pernyataan benar dan menunjukkan hubungan kausalitas (sebab-akibat) yang nyata."}, {"id": 14, "kategori": "Ekonomi & SDA", "soal": "Pengalokasian sumber daya yang terbatas untuk memenuhi kebutuhan yang tidak terbatas menjadi dasar dari kegiatan ekonomi. Tindakan yang sesuai dengan konsep tersebut adalah...", "opsi": ["Menggunakan seluruh gaji untuk konsumsi keluarga", "Memberikan sanksi kepada karyawan yang melanggar tata tertib", "Mengonsumsi makanan bergizi untuk mencegah stunting", "Menginvestasikan seluruh penghasilan untuk kebebasan finansial"], "jawaban": 2, "pembahasan": "Ilmu ekonomi adalah tentang pilihan (skala prioritas). Mengalokasikan dana secara bijak untuk makanan bergizi guna mencegah stunting adalah investasi pada kualitas SDM di masa depan."}, {"id": 15, "kategori": "Ekonomi & Nilai Guna", "soal": "Sampah plastik dapat didaur ulang menjadi ecobrick berupa bata ramah lingkungan yang dapat menggantikan bata merah atau batako, sehingga memiliki nilai ekonomi dan menghemat biaya konstruksi. Ecobrick memiliki nilai guna...", "opsi": ["Element utility", "Form utility (kegunaan bentuk)", "Place utility (kegunaan tempat)", "Ownership utility (kegunaan kepemilikan)"], "jawaban": 1, "pembahasan": "Mengubah limbah sampah plastik menjadi balok cetak bangunan (ecobrick) adalah contoh penciptaan nilai guna karena perubahan bentuk (Form Utility)."}, {"id": 16, "kategori": "Ekonomi & Uang", "soal": "Terdapat harga yang dilampirkan pada produk, yaitu Rp1.500,00, Rp3.500,00, dan Rp5.500,00. Fungsi uang yang tepat berdasarkan informasi harga tersebut adalah...", "opsi": ["Alat tukar", "Satuan hitung", "Penyimpan nilai", "Alat pembayaran"], "jawaban": 1, "pembahasan": "Angka rupiah yang tertera pada label produk mengindikasikan fungsi uang sebagai pengukur nilai barang atau satuan hitung."}, {"id": 17, "kategori": "Ekonomi & Perdagangan", "soal": "Perhatikan pernyataan berikut! (1) Meningkatkan laba perusahaan (2) Membuka pasar baru di dalam negeri (3) Memanfaatkan kelebihan komoditas yang dimiliki (4) Memenuhi kebutuhan dalam negeri (5) Bersaing dalam pasar internasional. Tujuan kegiatan ekspor adalah...", "opsi": ["(1), (2), dan (3)", "(1), (3), dan (5)", "(2), (4), dan (5)", "(3), (4), dan (5)"], "jawaban": 1, "pembahasan": "Kegiatan ekspor bertujuan meningkatkan devisa/laba (1), mendistribusikan kelebihan stok domestik (3), serta memperluas daya saing di pasar global (5)."}, {"id": 18, "kategori": "Ekonomi & Perdagangan", "soal": "Pak Arman merupakan tenaga ahli dari Indonesia yang diakui dunia. Dengan keahliannya, ia bekerja di beberapa negara seperti Inggris dan Australia. Bentuk kerjasama perdagangan antar negara tersebut adalah...", "opsi": ["Impor jasa kepada orang sendiri dengan imbalan", "Ekspor jasa kepada negara asing dengan imbalan", "Impor jasa kepada negara asing dengan imbalan", "Ekspor jasa kepada negara sendiri dengan imbalan"], "jawaban": 1, "pembahasan": "Pak Arman, sebagai tenaga ahli profesional Indonesia yang disewa di negara asing, merupakan pelaku kegiatan ekspor jasa yang mendatangkan imbalan/devisa."}, {"id": 19, "kategori": "Sejarah & Tokoh", "soal": "Perhatikan pernyataan berikut! (1) Ketua pergerakan bawah tanah melawan pemerintahan militer Jepang (2) Menyebarkan berita kekalahan Jepang pada 14 Agustus 1945 (3) Memimpin kabinet parlementer 1945-1947 (4) Pemimpin diplomasi mempertahankan kemerdekaan. Tokoh tersebut adalah...", "opsi": ["Sayuti Melik", "Soekarni", "Sutan Syahrir", "Ahmad Soebardjo"], "jawaban": 2, "pembahasan": "Sutan Syahrir adalah tokoh pemuda revolusioner yang memimpin gerakan bawah tanah pada masa pendudukan Jepang, serta diangkat menjadi Perdana Menteri pertama pada kabinet parlementer RI."}, {"id": 20, "kategori": "Sejarah & Tokoh", "soal": "Perhatikan pernyataan berikut! (1) Wakil Presiden pertama RI (2) Berperan dalam perundingan diplomasi setelah kemerdekaan (3) Dikenal sebagai Bapak Koperasi Indonesia (4) Menyusun konsep ekonomi Indonesia berbasis koperasi. Tokoh yang dimaksud adalah...", "opsi": ["Soekarno", "Mohammad Hatta", "Sutan Sjahrir", "Ki Hajar Dewantara"], "jawaban": 1, "pembahasan": "Drs. Mohammad Hatta adalah konseptor pasal 33 UUD 1945 yang menginisiasi konsep koperasi berlandaskan kekeluargaan untuk menopang ekonomi bangsa."}, {"id": 22, "kategori": "Sosial & Norma", "soal": "Pasangkan pernyataan dan norma berikut! (1) Norma yang dipelajari dari kitab suci (2) Setiap pelanggaran mendapat sanksi tegas seperti denda/penjara (3) Kita merasa malu ketika melanggar norma ini (4) Berisi perbuatan yang dianggap benar/salah oleh masyarakat. Pasangan: A. Norma Kesopanan, B. Norma Kesusilaan, C. Norma Hukum, D. Norma Agama.", "opsi": ["1D, 2C, 3B, dan 4A", "1A, 2D, 3C, dan 4B", "1B, 2C, 3A, dan 4C", "1C, 2B, 3A, dan 4D"], "jawaban": 0, "pembahasan": "Norma Agama bersumber dari kitab suci (D), Norma Hukum memiliki sanksi tegas (C), Norma Kesusilaan bersumber dari nurani dan rasa malu (B), Norma Kesopanan lahir dari kebiasaan pergaulan (A). Jadi: 1D, 2C, 3B, 4A."}, {"id": 23, "kategori": "Sosial & Lembaga", "soal": "Anak memiliki hak untuk diberikan kasih sayang dan perlindungan oleh orang tua. Salah satu peran keluarga yang terkait dengan fungsi sosialisasi nilai dan norma adalah...", "opsi": ["Keluarga memberikan pendidikan agar dapat berperan di masyarakat", "Anak dipenuhi semua fasilitasnya sesuai kesanggupan keluarga", "Ayah memberikan pemahaman kerja keras dan disiplin pada anak", "Ibu memberikan kasih sayang dan memenuhi kebutuhan sehari-hari"], "jawaban": 2, "pembahasan": "Penanaman fondasi karakter sejak dini (disiplin, empati, kerja keras) merupakan contoh pelaksanaan fungsi sosialisasi nilai dan norma oleh orang tua."}, {"id": 25, "kategori": "Sosial & Lembaga", "soal": "Pasangkan lembaga dan perannya! (1) Kepolisian RI (2) KPK (3) Bank Indonesia (4) Sekolah. Peran: A. Menjaga stabilitas nilai tukar rupiah, B. Memberikan pendidikan formal, C. Mencegah korupsi, D. Menjaga keamanan dan ketertiban.", "opsi": ["1A, 2D, 3A, dan 4B", "1B, 2C, 3A, dan 4C", "1D, 2C, 3A, dan 4B", "1C, 2D, 3B, dan 4A"], "jawaban": 2, "pembahasan": "Kepolisian menjaga keamanan (D), KPK mencegah korupsi (C), Bank Indonesia menjaga stabilitas rupiah (A), Sekolah pendidikan formal (B). Jadi: 1D, 2C, 3A, 4B."}, {"id": 26, "kategori": "Sosial & Budaya", "soal": "Pasangkan rumah adat, asal daerah, dan tarian daerah! Rumah: A. Gadang, B. Joglo, C. Limas, D. Honai, E. Kebaya. Tari: 1. Gambyong, 2. Sajojo, 3. Piring, 4. Cokek, 5. Gending Sriwijaya. Daerah: a. Sumsel, b. Betawi, c. Jateng, d. Papua, e. Sumbar. Pasangan yang tepat adalah...", "opsi": ["(B), (1), dan (c) — Joglo, Tari Gambyong, Jawa Tengah", "(C), (4), dan (b)", "(A), (3), dan (d)", "(E), (5), dan (e)"], "jawaban": 0, "pembahasan": "Korelasi yang tepat: Rumah Joglo berasal dari Jawa Tengah, diasosiasikan dengan Tari Gambyong. Jadi (B), (1), (c)."}, {"id": 27, "kategori": "Sejarah & Kemerdekaan", "soal": "Teks proklamasi disusun oleh Ir. Soekarno, Moh. Hatta, dan Ahmad Soebardjo, lalu dibacakan pada 17 Agustus 1945. Bentuk proses sosial berdasarkan wacana tersebut adalah...", "opsi": ["Persaingan antar tokoh", "Akomodasi tanpa kesepakatan", "Kerja sama antar tokoh bangsa", "Penaklukan terhadap penjajah"], "jawaban": 2, "pembahasan": "Perumusan teks proklamasi oleh tiga tokoh di rumah Laksamana Maeda menunjukkan bentuk interaksi kerja sama untuk mencapai kemerdekaan."}, {"id": 28, "kategori": "Sosial & Keberagaman", "soal": "Perhatikan pernyataan berikut! (1) Menggunakan bahasa Indonesia saat berbicara dengan teman berbeda daerah (2) Mengejek teman karena gaya bicaranya berbeda (3) Berteman tanpa membedakan asal suku (4) Mengenal dan mempelajari budaya suku lain (5) Memperolok pakaian adat yang berbeda. Sikap menghargai keberagaman sosial budaya adalah...", "opsi": ["(1), (2), dan (3)", "(1), (3), dan (4)", "(2), (4), dan (5)", "(3), (4), dan (5)"], "jawaban": 1, "pembahasan": "Toleransi ditunjukkan dengan menggunakan bahasa pemersatu (1), berteman inklusif tanpa membedakan (3), dan terbuka mempelajari budaya antarsuku (4)."}, {"id": 30, "kategori": "Sosial & Globalisasi", "soal": "Perhatikan pernyataan berikut! (1) Mendapatkan berita dari sumber terpercaya (2) Menyebarkan pesan yang belum jelas sumbernya (3) Memilih dan menyaring informasi dengan benar (4) Langsung percaya pada berita media sosial (5) Memeriksa akurasi dan kebenaran sumber informasi. Sikap cermat memilih informasi di era globalisasi adalah...", "opsi": ["(1), (2), dan (3)", "(1), (3), dan (5)", "(2), (4), dan (5)", "(3), (4), dan (5)"], "jawaban": 1, "pembahasan": "Bersikap kritis berarti mengakses sumber kredibel (1), selektif menyaring info (3), serta melakukan verifikasi ulang/cross-check fakta (5)."}, {"id": 32, "kategori": "Ekonomi & Lembaga", "soal": "PT Kereta Api Indonesia (KAI) merupakan BUMN. Peran BUMN yang tepat berdasarkan hal tersebut adalah...", "opsi": ["Kesejahteraan rakyat", "Penyelenggara pelayanan publik", "Perintis sektor usaha swasta", "Pembangunan lapangan kerja"], "jawaban": 1, "pembahasan": "PT KAI (Persero) bertugas melayani mobilitas hajat hidup orang banyak sebagai wujud penyelenggaraan Public Service Obligation (pelayanan publik)."}, {"id": 34, "kategori": "Ekonomi & Uang", "soal": "Pernyataan A: Uang sebagai alat pembayaran yang sah dipakai untuk membayar barang/jasa. Pernyataan B: Memindahkan sebidang tanah ke tempat lain dengan cara ditukar dengan uang, lalu membeli tanah di tempat lain. Hubungan dua pernyataan yang tepat adalah...", "opsi": ["A benar, B benar, ada hubungan", "A benar, B benar, tidak ada hubungan", "A benar, B salah", "A salah, B benar"], "jawaban": 1, "pembahasan": "Pernyataan A menjelaskan fungsi pembayaran; B mendeskripsikan transaksi pemindahan aset. Keduanya menyatakan fungsi uang yang valid, namun konteksnya terpisah (tidak ada relasi sebab-akibat langsung)."}, {"id": 35, "kategori": "Ekonomi & Kegiatan", "soal": "Seorang petani sedang memanen padi di sawah. Kegiatan ekonomi yang tepat berdasarkan hal tersebut adalah...", "opsi": ["Distribusi", "Produksi", "Konsumsi", "Produktif"], "jawaban": 1, "pembahasan": "Kegiatan agraris seperti menanam atau memanen padi dikategorikan sebagai kegiatan menghasilkan nilai/barang (Produksi)."}, {"id": 36, "kategori": "Ekonomi & Nilai Guna", "soal": "Nilai guna merupakan manfaat yang diperoleh karena menggunakan barang/jasa. Jika kayu gelondongan diubah menjadi furnitur (meja dan kursi), penambahan nilai guna yang tepat adalah...", "opsi": ["Nilai guna kepemilikan", "Nilai guna tempat", "Nilai guna bentuk", "Nilai guna waktu"], "jawaban": 2, "pembahasan": "Kayu log yang diukir dan dirakit menjadi furnitur mengalami kenaikan nilai signifikan karena perubahan bentuknya (Form Utility / nilai guna bentuk)."}, {"id": 38, "kategori": "Geografi & Energi", "soal": "Alat berupa turbin/kincir yang terpasang di tepi atau lepas pantai mampu menghasilkan energi listrik ramah lingkungan. Sebagai negara maritim, energi ini potensial dikembangkan di Indonesia. Energi listrik yang dihasilkan berasal dari...", "opsi": ["Panas matahari", "Gelombang laut", "Angin darat", "Angin laut"], "jawaban": 3, "pembahasan": "Turbin angin masif yang ditempatkan di laut (offshore) dirancang menangkap energi kinetik dari sirkulasi angin laut yang stabil."}, {"id": 40, "kategori": "Ekonomi & Perdagangan", "soal": "Perhatikan pernyataan berikut! (1) Perbedaan bahasa (2) Peperangan (3) Bea masuk tinggi (4) Jarak antar negara (5) Pembatasan kuota. Hambatan perdagangan internasional ada pada nomor...", "opsi": ["(1), (2) dan (3)", "(1), (2) dan (4)", "(1), (3) dan (5)", "(2), (3) dan (5)"], "jawaban": 3, "pembahasan": "Hambatan utama: instabilitas geopolitik seperti peperangan (2), pengenaan tarif/bea masuk (3), dan pembatasan kuantitas/kuota impor (5)."}, {"id": 41, "kategori": "Geografi & SDA", "soal": "Pernyataan A: Dataran rendah banyak dialiri sungai, tanahnya gembur dan suhu udaranya panas, penduduknya banyak menanam kopi, teh, dan kakao. Pernyataan B: Hasil perikanan laut di antaranya ikan tongkol, tuna, udang, rumput laut. Hubungan dua pernyataan yang tepat adalah...", "opsi": ["A benar, B benar, ada hubungan", "A benar, B benar, tidak ada hubungan", "A benar, B salah", "A salah, B benar"], "jawaban": 3, "pembahasan": "Perkebunan teh dan kopi membutuhkan iklim sejuk di dataran tinggi, bukan dataran rendah panas (Pernyataan A salah). Potensi perikanan laut mencakup tuna dan tongkol (Pernyataan B benar)."}, {"id": 42, "kategori": "Ekonomi & SDA", "soal": "Perhatikan pernyataan berikut! (1) Minyak bumi (2) Batu bara (3) Air (4) Gas alam (5) Udara. Barang tambang yang menghasilkan energi adalah...", "opsi": ["(1), (2), dan (3)", "(1), (2), dan (4)", "(2), (3), dan (5)", "(3), (4), dan (5)"], "jawaban": 1, "pembahasan": "Sumber utama energi dari barang tambang merujuk pada hidrokarbon: Minyak Bumi (1), Batu Bara (2), dan Gas Alam (4)."}, {"id": 44, "kategori": "Geografi & ASEAN", "soal": "Sebuah negara anggota ASEAN memiliki pendapatan per kapita sangat tinggi dan terkenal makmur meski wilayahnya kecil. Komoditas unggulan dari negara tersebut (Brunei Darussalam) adalah...", "opsi": ["Pariwisata dan pertanian", "Perkebunan karet dan rempah-rempah", "Perikanan dan pariwisata", "Minyak bumi dan gas alam"], "jawaban": 3, "pembahasan": "Brunei Darussalam mendominasi pendapatan per kapita Asia Tenggara karena disokong penuh produksi pertambangan utama: Minyak Bumi dan Gas Alam."}, {"id": 45, "kategori": "Ekonomi & Perdagangan", "soal": "Persaingan perdagangan internasional ditandai perang harga. Strategi pengusaha adalah menghasilkan komoditas ekspor lebih murah dari pesaing. Pernyataan yang sesuai dengan wacana tersebut adalah...", "opsi": ["Melaksanakan strategi pemasaran digital", "Menyediakan tenaga kerja ahli berkelas internasional", "Meningkatkan daya saing dengan efisiensi biaya produksi", "Membuat produk yang memiliki ciri khas/unik"], "jawaban": 2, "pembahasan": "Efisiensi biaya produksi (overhead) adalah strategi agar produsen dapat mematok harga jual lebih rendah guna memenangkan persaingan di pasar ekspor."}, {"id": 46, "kategori": "Sejarah & Budaya", "soal": "Salah satu bukti pengaruh Islam dalam seni arsitektur di Indonesia dapat ditemukan pada...", "opsi": ["Bentuk atap masjid yang bertingkat seperti di Masjid Demak", "Patung-patung relief candi di Jawa Tengah", "Rumah adat Tongkonan berbentuk panggung", "Bangunan benteng peninggalan Portugis di Maluku"], "jawaban": 0, "pembahasan": "Atap tumpang/bersusun ganjil (seperti Masjid Agung Demak) merupakan akulturasi dari bangunan ibadah berundak peninggalan peradaban Hindu-Jawa pada bangunan masjid."}, {"id": 48, "kategori": "Sejarah & Perlawanan", "soal": "Tokoh yang memimpin Perang Jawa (Tahun 1825-1830) melawan pemerintah kolonial Belanda adalah...", "opsi": ["Sultan Agung", "Pangeran Antasari", "Pangeran Diponegoro", "Sultan Hasanuddin"], "jawaban": 2, "pembahasan": "Pangeran Diponegoro adalah tokoh sentral Perang Jawa yang masif. Taktik gerilyanya bahkan hampir membangkrutkan keuangan pemerintah Hindia Belanda."}, {"id": 49, "kategori": "Sejarah & Diplomasi", "soal": "Sebuah peristiwa bersejarah terjadi pada tanggal 11-15 November 1946 di Cirebon, menghasilkan pengakuan kedaulatan RI secara de facto atas Jawa, Sumatera, dan Madura. Peristiwa tersebut adalah...", "opsi": ["Perundingan Renville", "Perundingan Roem-Roijen", "Perundingan Linggarjati", "Konferensi Meja Bundar"], "jawaban": 2, "pembahasan": "Perundingan Linggarjati (1946) di Cirebon menghasilkan kompromi pengakuan kedaulatan RI secara de facto atas wilayah Jawa, Sumatera, dan Madura."}, {"id": 51, "kategori": "Sejarah & Budaya", "soal": "Masuknya Islam ke Indonesia memberikan pengaruh pada pembentukan tradisi masyarakat. Salah satunya tradisi Sekaten yang dilakukan keraton Yogyakarta berkaitan dengan perayaan...", "opsi": ["Menyambut datangnya bulan suci Ramadhan", "Memperingati kelahiran Nabi Muhammad SAW", "Menyambut Idul Fitri 1 Syawal", "Mempersiapkan hewan kurban pada Idul Adha"], "jawaban": 1, "pembahasan": "Ritual Sekaten dilaksanakan di keraton Jawa (Yogyakarta dan Surakarta) dengan puncak acara Grebeg Mulud untuk memuliakan hari kelahiran Nabi Muhammad SAW."}, {"id": 52, "kategori": "Sejarah & Kerajaan", "soal": "Pernyataan A: Kesultanan Aceh didirikan oleh Sultan Ali Mughayat Syah pada tahun 1496. Pernyataan B: Kesultanan Aceh mengalami masa ekspansi dan pengaruh terluas pada masa Sultan Iskandar Muda (1607-1636). Hubungan dua pernyataan yang tepat adalah...", "opsi": ["A benar, B benar, dan ada hubungan", "A benar, B benar, tetapi tidak ada hubungan", "A benar, B salah", "A salah, B benar"], "jawaban": 0, "pembahasan": "Sultan Ali Mughayat Syah adalah pendiri (abad-15), fondasi tersebut memuncak menjadi kekuatan regional terbesar Selat Malaka di bawah Sultan Iskandar Muda. Kedua fakta saling berkaitan."}, {"id": 53, "kategori": "Sejarah & Perlawanan", "soal": "Sultan Hasanuddin, yang dijuluki 'Ayam Jantan dari Timur', memimpin perlawanan terhadap penjajahan Belanda (VOC) di daerah...", "opsi": ["Sulawesi Utara", "Sulawesi Tengah", "Sulawesi Selatan", "Sulawesi Tenggara"], "jawaban": 2, "pembahasan": "Sultan Hasanuddin memimpin pertahanan gigih melawan VOC untuk melindungi Kesultanan Makassar di Sulawesi Selatan."}, {"id": 54, "kategori": "Sejarah & Pendudukan Jepang", "soal": "Lokasi pertama pendaratan Jepang di Indonesia pada 11 Januari 1942, yang dipilih karena cadangan ladang minyaknya, adalah...", "opsi": ["Balikpapan", "Banjarmasin", "Pontianak", "Tarakan (Kalimantan Utara)"], "jawaban": 3, "pembahasan": "Tarakan (dulu Kalimantan Timur, kini Kalimantan Utara) menjadi pendaratan pertama Armada Laut Kekaisaran Jepang tahun 1942 karena cadangan minyaknya yang krusial."}, {"id": 55, "kategori": "Sejarah & Tokoh", "soal": "Perhatikan pernyataan berikut! (1) Tergabung golongan muda yang menghendaki kemerdekaan cepat (2) Terlibat mengamankan Soekarno-Hatta ke Rengasdengklok (3) Mengetik naskah teks proklamasi (4) Anggota KNIP. Tokoh tersebut adalah...", "opsi": ["Sayuti Melik", "Soekarni", "Sutan Syahrir", "Ahmad Soebardjo"], "jawaban": 0, "pembahasan": "Sayuti Melik, bersama golongan muda, terlibat dalam peristiwa Rengasdengklok dan bertindak sebagai pengetik naskah proklamasi dari draf tulisan tangan Soekarno."}, {"id": 56, "kategori": "Sejarah & Prasejarah", "soal": "Fungsi utama dari struktur peninggalan sejarah berupa Menhir (batu besar berdiri tegak) zaman megalitikum adalah...", "opsi": ["Bangunan untuk menyimpan benda pusaka", "Tempat pemujaan terhadap roh nenek moyang", "Area pertemuan tokoh adat", "Penanda wilayah kekuasaan suku"], "jawaban": 1, "pembahasan": "Menhir adalah struktur batu monolitik tegak peninggalan prasejarah yang berfungsi sebagai sarana pemujaan leluhur (animisme/dinamisme)."}, {"id": 57, "kategori": "Sejarah & Prasejarah", "soal": "Pernyataan A: Situs Sangiran terletak di Jawa Tengah dan dikenal sebagai situs arkeologi penting. Pernyataan B: Situs Sangiran hanya menyimpan artefak alat batu dan tidak memiliki fosil manusia purba. Hubungan dua pernyataan yang tepat adalah...", "opsi": ["A benar, B benar, dan ada hubungan", "A benar, B benar, tetapi tidak ada hubungan", "A benar, B salah", "A salah, B benar"], "jawaban": 2, "pembahasan": "Selain artefak batu, Sangiran terkenal berkat penemuan fosil manusia purba Pithecanthropus erectus, sehingga Pernyataan B bernilai salah."}, {"id": 58, "kategori": "Sejarah & Budaya", "soal": "Bangunan Menara Kudus merupakan contoh akulturasi budaya. Ciri khas arsitektur yang mencerminkan akulturasi adalah...", "opsi": ["Adanya elemen arsitektur candi Hindu pada struktur menara", "Penggunaan ornamen khas Arab pada seluruh bagian menara", "Menara dibangun dengan bahan baku modern", "Menara tidak memiliki fungsi religius"], "jawaban": 0, "pembahasan": "Menara Kudus dirancang menyerupai gapura candi dengan susunan batu bata merah, menampilkan asimilasi corak arsitektur Majapahit (Hindu) pada rumah ibadah Islam."}, {"id": 59, "kategori": "Sejarah & Kolonial", "soal": "Cornelis de Houtman dikenal sebagai pelaut Belanda yang pertama kali mencapai Nusantara (di Banten) tahun 1595. Tujuan utama kedatangannya yaitu...", "opsi": ["Mencari tanah untuk dijadikan koloni", "Menjalin hubungan diplomatik dengan kerajaan lokal", "Mencari rempah-rempah dan membuka jalur perdagangan", "Menyebarkan agama Kristen"], "jawaban": 2, "pembahasan": "Penjelajahan pertama armada Cornelis de Houtman tahun 1595 dilatarbelakangi motivasi ekonomi: monopoli dagang komoditas rempah-rempah yang mahal di pasar Eropa."}, {"id": 60, "kategori": "Sejarah & Kolonial", "soal": "Pada penerapan kebijakan Politik Etis, irigasi menjadi salah satu fokus utama. Alasan sebenarnya penerapan kebijakan tersebut yaitu...", "opsi": ["Meningkatkan produksi pertanian demi kepentingan pasar Eropa", "Mengurangi ketergantungan rakyat pada hasil laut", "Memaksa rakyat berpindah dari pertanian ke industri", "Mengurangi jumlah penduduk di pedesaan"], "jawaban": 0, "pembahasan": "Trias Van Deventer (Irigasi, Edukasi, Emigrasi) sering disalahgunakan. Proyek irigasi raksasa lebih dipusatkan untuk mengairi perkebunan swasta Belanda demi memacu ekspor hasil bumi ke pasar global."}];
+const SESSION_SIZE = 30;
+const PASS = 0.8;
+let pool=[], idx=0, answers=[], answered=false, best=0;
+
+/* ---------- penyimpanan lokal ---------- */
+const LS_KEY = 'osn_ips_rapor_v1';
+function loadStore(){
+  try{ const r = localStorage.getItem(LS_KEY); if(r) return JSON.parse(r); }catch(e){}
+  return { name:'', sessions:[] };
+}
+function saveStore(s){ try{ localStorage.setItem(LS_KEY, JSON.stringify(s)); }catch(e){} }
+let store = loadStore();
+
+function refreshHome(){
+  document.getElementById('who-name').textContent = store.name || 'Tamu';
+  best = store.sessions.reduce((m,s)=>Math.max(m,s.pct),0);
+  document.getElementById('st-best').textContent = store.sessions.length? best+'%' : '—';
+}
+
+/* ---------- profil nama ---------- */
+function openNameModal(){
+  document.getElementById('nameInput').value = store.name || '';
+  document.getElementById('nameModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('nameInput').focus(),50);
+}
+function saveName(){
+  const v = document.getElementById('nameInput').value.trim();
+  store.name = v; saveStore(store);
+  document.getElementById('nameModal').classList.add('hidden');
+  refreshHome();
+}
+document.getElementById('nameInput')&&document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName();});
+
+document.getElementById('st-bank').textContent = BANK.length;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function show(id){['home','quiz','result','history'].forEach(s=>document.getElementById(s).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0);}
+function goHome(){refreshHome();show('home');}
+
+function startQuiz(){
+  if(!store.name){ openNameModal(); return; }
+  const n = Math.min(SESSION_SIZE, BANK.length);
+  pool = shuffle(BANK).slice(0,n);
+  idx=0; answers=new Array(pool.length).fill(null); answered=false;
+  document.getElementById('qtot').textContent = pool.length;
+  show('quiz'); renderQ();
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// Memecah teks soal menjadi bagian-bagian rapi: stem, daftar pernyataan,
+// dua-pernyataan A/B, tabel menjodohkan, dan kalimat tugas penutup.
+function formatSoal(raw, num){
+  let t = raw.trim();
+  const stemPrefix = '<span class="qstem">'+num+'. ';
+
+  // --- POLA 1: dua pernyataan "Pernyataan A: ... Pernyataan B: ..." ---
+  const pairRe = /Pernyataan A\s*:\s*([\s\S]*?)\s*Pernyataan B\s*:\s*([\s\S]*?)(?=\s*(?:Berdasarkan|Hubungan)\b)/i;
+  const pm = t.match(pairRe);
+  if(pm){
+    const before = t.slice(0, pm.index).trim();
+    const after  = t.slice(pm.index + pm[0].length).trim();
+    let html = stemPrefix + (before?esc(before):'Perhatikan dua pernyataan berikut!') + '</span>';
+    html += '<div class="stmt-pair">'
+      + '<div class="pp a"><span class="badge">A</span><span>'+esc(pm[1].trim())+'</span></div>'
+      + '<div class="pp b"><span class="badge">B</span><span>'+esc(pm[2].trim())+'</span></div>'
+      + '</div>';
+    if(after) html += '<div class="qtask">'+esc(after)+'</div>';
+    return html;
+  }
+
+  // --- POLA 2: menjodohkan (mengandung "Pasangkan") ---
+  if(/Pasangkan/i.test(t)){
+    return formatMatch(t, stemPrefix);
+  }
+
+  // --- POLA 3: daftar pernyataan bernomor (1) (2) (3) ... ---
+  const firstNum = t.search(/\(1\)/);
+  if(firstNum !== -1 && /\(2\)/.test(t)){
+    const stem = t.slice(0, firstNum).trim();
+    let rest = t.slice(firstNum);
+    // pisahkan ekor tugas: cari kalimat setelah item terakhir yang diawali kata kunci
+    let tail = '';
+    const tailRe = /\.?\s*((?:Berdasarkan|Pernyataan|Perilaku|Sikap|Tujuan|Hambatan|Barang|Faktor|Urutan)\b[\s\S]*)$/i;
+    // Ambil item bernomor
+    const items = [];
+    const itemRe = /\((\d+)\)\s*([\s\S]*?)(?=\s*\(\d+\)|$)/g;
+    let m, lastEnd=0;
+    while((m = itemRe.exec(rest))){ items.push([m[1], m[2].trim()]); lastEnd = itemRe.lastIndex; }
+    // Item terakhir mungkin masih mengandung kalimat tugas — pisahkan
+    if(items.length){
+      let last = items[items.length-1][1];
+      const tm = last.match(/^([\s\S]*?[.!?])\s+([A-Z][\s\S]*(?:adalah|nomor|tepat|berikut)[\s\S]*[.?!]?)$/);
+      if(tm){ items[items.length-1][1] = tm[1].trim(); tail = tm[2].trim(); }
+      else {
+        // fallback: cari kata kunci tugas di dalam item terakhir
+        const km = last.match(/^([\s\S]*?)\s+((?:Berdasarkan|Pernyataan sikap|Perilaku|Sikap|Tujuan|Hambatan|Barang tambang|Urutan)[\s\S]*)$/i);
+        if(km){ items[items.length-1][1] = km[1].trim().replace(/[.,]$/,''); tail = km[2].trim(); }
+      }
+    }
+    let html = stemPrefix + esc(stem.replace(/\s*Perhatikan pernyataan berikut!?\s*$/i,'').trim() || 'Perhatikan pernyataan berikut!') + '</span>';
+    html += '<ul class="stmt-list">';
+    items.forEach(([n,txt])=>{ html += '<li><span class="no">'+esc(n)+'</span><span>'+esc(txt.replace(/[.;]\s*$/,''))+'</span></li>'; });
+    html += '</ul>';
+    if(tail) html += '<div class="qtask">'+esc(tail)+'</div>';
+    return html;
+  }
+
+  // --- default: teks biasa ---
+  return stemPrefix + esc(t) + '</span>';
+}
+
+// Format soal menjodohkan: deteksi item bernomor + daftar pilihan
+function formatMatch(t, stemPrefix){
+  const taskIdx = t.search(/Pasangkan/i);
+  const head = t.slice(0, taskIdx).trim();
+  let body = t.slice(taskIdx);
+  const taskM = body.match(/^(Pasangkan[\s\S]*?[!.])\s*/i);
+  const task = taskM ? taskM[1].trim() : 'Pasangkan pernyataan berikut!';
+  let rest = taskM ? body.slice(taskM[0].length).trim() : body;
+
+  let html = stemPrefix + (head?esc(head)+' ':'') + esc(task) + '</span>';
+
+  // VARIAN A: baris "(1) teks - (A) label" → tabel dua kolom
+  const rows = [];
+  const rowRe = /\((\d+)\)\s*([\s\S]*?)\s*-\s*\(([A-Ea-e])\)\s*([\s\S]*?)(?=\s*\(\d+\)|$)/g;
+  let m;
+  while((m = rowRe.exec(rest))){ rows.push([m[1], m[2].trim().replace(/[.;]$/,''), m[3], m[4].trim().replace(/[.;]$/,'')]); }
+  if(rows.length){
+    html += '<div class="match-grid">';
+    rows.forEach(([n,left,key,right])=>{
+      html += '<div class="row"><div class="c k">('+esc(n)+') '+esc(left)+'</div><div class="c">('+esc(key)+') '+esc(right)+'</div></div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  // VARIAN B: pernyataan bernomor (1)(2).. lalu "Pasangan:/Pasangan A. .. B. .."
+  // Pisahkan blok pernyataan dan blok pilihan berdasarkan kata penanda.
+  const splitRe = /\b(Pasangan|Pilihan|Peran)\s*:?/i;
+  const sp = rest.search(splitRe);
+  let stmtPart = sp>-1 ? rest.slice(0, sp).trim() : rest;
+  let optPart  = sp>-1 ? rest.slice(sp).replace(splitRe,'').trim() : '';
+
+  // Pisahkan kalimat tugas penutup (mis. "... yang tepat adalah...") dari blok pilihan
+  let tail = '';
+  const tailM = optPart.match(/\s+([A-Z][a-z]+(?:\s+\w+){0,4}\s+yang tepat[\s\S]*)$/);
+  if(tailM){ tail = tailM[1].trim(); optPart = optPart.slice(0, tailM.index).trim().replace(/[.,]$/,''); }
+
+  // VARIAN C: tiga kelompok berlabel (Rumah: ... Tari: ... Daerah: ...) tanpa (1)(2)
+  const groupRe = /([A-Z][A-Za-z ]+?):\s*([^:]*?)(?=(?:[A-Z][A-Za-z ]+?:)|$)/g;
+  const groups = [];
+  let gm, gtarget = stmtPart + (sp===-1 ? '' : '');
+  // hanya pakai bila tidak ada pernyataan bernomor & ada minimal 2 kelompok berlabel
+  if(!/\(\d+\)/.test(stmtPart)){
+    while((gm = groupRe.exec(stmtPart))){ groups.push([gm[1].trim(), gm[2].trim().replace(/[.;]$/,'')]); }
+  }
+  if(groups.length>=2){
+    html += '<div class="match-opts">';
+    groups.forEach(([label,vals])=>{
+      const chips = vals.split(/,\s*(?=[A-Za-z0-9]+\.\s)/).map(s=>s.trim().replace(/[.;]$/,'')).filter(Boolean);
+      html += '<div class="lbl">'+esc(label)+'</div><div class="chips" style="margin-bottom:10px">';
+      chips.forEach(c=>{ html += '<span class="chip">'+esc(c)+'</span>'; });
+      html += '</div>';
+    });
+    html += '</div>';
+    if(tail) html += '<div class="qtask">'+esc(tail)+'</div>';
+    return html;
+  }
+
+  // pernyataan bernomor (1)(2)(3)
+  const items = [];
+  const itemRe = /\((\d+)\)\s*([\s\S]*?)(?=\s*\(\d+\)|$)/g;
+  while((m = itemRe.exec(stmtPart))){ items.push([m[1], m[2].trim().replace(/[.;]$/,'')]); }
+
+  if(items.length){
+    html += '<ul class="stmt-list">';
+    items.forEach(([n,txt])=>{ html += '<li><span class="no">'+esc(n)+'</span><span>'+esc(txt)+'</span></li>'; });
+    html += '</ul>';
+  }
+
+  // pilihan: pecah jadi chip berdasarkan pola "A. xxx" / "1. xxx" / "a. xxx"
+  if(optPart){
+    const chips = optPart.split(/,\s*(?=[A-Za-z0-9]+\.\s)/).map(s=>s.trim().replace(/[.;]$/,'')).filter(Boolean);
+    if(chips.length>1){
+      html += '<div class="match-opts"><div class="lbl">Pilihan jawaban</div><div class="chips">';
+      chips.forEach(c=>{ html += '<span class="chip">'+esc(c)+'</span>'; });
+      html += '</div></div>';
+    } else {
+      html += '<div class="qtask" style="font-weight:500;font-size:15px;font-family:\'Plus Jakarta Sans\'">'+esc(optPart)+'</div>';
+    }
+    return html;
+  }
+
+  if(!items.length){
+    html += '<div class="qtask" style="font-weight:500;font-size:15px;font-family:\'Plus Jakarta Sans\'">'+esc(rest)+'</div>';
+  }
+  return html;
+}
+
+function renderQ(){
+  answered=false;
+  const q=pool[idx];
+  document.getElementById('cat').textContent=q.kategori;
+  document.getElementById('qtext').innerHTML=formatSoal(q.soal, idx+1);
+  document.getElementById('qnum').textContent=idx+1;
+  document.getElementById('bar').style.width=((idx)/pool.length*100)+'%';
+  const labs=['A','B','C','D'];
+  const wrap=document.getElementById('opts');wrap.innerHTML='';
+  q.opsi.forEach((o,i)=>{
+    const b=document.createElement('button');b.className='opt';
+    b.innerHTML='<span class="lab">'+labs[i]+'</span><span>'+o+'</span>';
+    b.onclick=()=>choose(i,b);wrap.appendChild(b);
+  });
+  document.getElementById('explain').classList.add('hidden');
+  document.getElementById('nextbtn').classList.add('hidden');
+}
+
+function choose(i,btn){
+  if(answered) return;
+  answered=true; answers[idx]=i;
+  const q=pool[idx];const opts=document.querySelectorAll('#opts .opt');
+  opts.forEach((el,j)=>{el.disabled=true;
+    if(j===q.jawaban)el.classList.add('correct');
+    if(j===i&&i!==q.jawaban)el.classList.add('wrong');
+    if(j===i&&i===q.jawaban)el.classList.add('correct');
+  });
+  const ok=i===q.jawaban;
+  const rl=document.getElementById('resline');
+  rl.className='res '+(ok?'ok':'no');
+  rl.textContent= ok?'✓ Benar!':'✗ Kurang tepat — jawaban benar: '+['A','B','C','D'][q.jawaban];
+  document.getElementById('exptext').textContent=q.pembahasan;
+  document.getElementById('explain').classList.remove('hidden');
+  document.getElementById('nextbtn').classList.remove('hidden');
+  document.getElementById('nextbtn').textContent = (idx===pool.length-1)?'Lihat Hasil →':'Lanjut →';
+  document.getElementById('score').textContent=answers.filter((a,k)=>a===pool[k].jawaban).length;
+}
+
+function nextQ(){ if(idx<pool.length-1){idx++;renderQ();}else{finish();} }
+
+function confirmQuit(){ if(confirm('Keluar dari latihan? Progres sesi ini akan hilang.')) goHome(); }
+
+function finish(){
+  document.getElementById('bar').style.width='100%';
+  const correct=answers.filter((a,k)=>a===pool[k].jawaban).length;
+  const total=pool.length; const pct=Math.round(correct/total*100);
+  if(pct>best){best=pct;document.getElementById('st-best').textContent=best+'%';}
+  // hero
+  document.getElementById('ring').textContent=pct+'%';
+  document.getElementById('subscore').textContent=correct+' benar dari '+total+' soal';
+  const v=document.getElementById('verdict');const m=document.getElementById('medal');
+  if(pct>=PASS*100){v.textContent='LULUS — Calon Juara!';v.className='verdict win';m.textContent='🏆';m.style.background='radial-gradient(circle at 35% 30%,#ffe9a8,#e0b341)';}
+  else if(pct>=60){v.textContent='Hampir! Terus Berlatih';v.className='verdict mid';m.textContent='🥈';m.style.background='radial-gradient(circle at 35% 30%,#eef1f5,#c3ccd6)';}
+  else{v.textContent='Ayo Kuatkan Dasar';v.className='verdict low';m.textContent='📖';m.style.background='radial-gradient(circle at 35% 30%,#f3e2df,#d6a9a4)';}
+
+  // per-category bars
+  const cat={};
+  pool.forEach((q,k)=>{const c=q.kategori.split(' & ')[0];if(!cat[c])cat[c]={t:0,c:0};cat[c].t++;if(answers[k]===q.jawaban)cat[c].c++;});
+  const bars=document.getElementById('bars');bars.innerHTML='<h3 class="serif">Penguasaan per Bidang</h3>';
+  Object.keys(cat).sort((a,b)=>(cat[a].c/cat[a].t)-(cat[b].c/cat[b].t)).forEach(c=>{
+    const p=Math.round(cat[c].c/cat[c].t*100);
+    const col=p>=80?'#2f6e4f':p>=50?'#c8932a':'#8c2f2a';
+    bars.innerHTML+='<div class="bar"><div class="nm">'+c+'</div><div class="track"><i style="width:'+p+'%;background:'+col+'"></i></div><div class="pc">'+cat[c].c+'/'+cat[c].t+'</div></div>';
+  });
+
+  // review of wrong + all
+  const rb=document.getElementById('reviewBox');
+  const wrongCount=answers.filter((a,k)=>a!==pool[k].jawaban).length;
+  rb.innerHTML='<h3 class="serif">Perbaikan Jawaban'+(wrongCount?' ('+wrongCount+' soal perlu dipelajari)':' — Sempurna! 🎉')+'</h3>';
+  const labs=['A','B','C','D'];
+  pool.forEach((q,k)=>{
+    const ok=answers[k]===q.jawaban;
+    const your = answers[k]==null?'(tidak dijawab)':labs[answers[k]]+'. '+q.opsi[answers[k]];
+    rb.innerHTML+=
+      '<div class="rev-item '+(ok?'ok':'no')+'">'
+      +'<div class="rev-q">'+(k+1)+'. '+q.soal+'</div>'
+      +'<div class="rev-line your '+(ok?'match':'')+'"><span class="tag">Jawabanmu:</span> '+your+'</div>'
+      +(ok?'':'<div class="rev-line key"><span class="tag">Kunci benar:</span> '+labs[q.jawaban]+'. '+q.opsi[q.jawaban]+'</div>')
+      +'<div class="rev-exp"><b>Pembahasan:</b> '+q.pembahasan+'</div>'
+      +'</div>';
+  });
+  // simpan sesi ke penyimpanan lokal
+  const catRec={};
+  Object.keys(cat).forEach(c=>{catRec[c]=[cat[c].c,cat[c].t];});
+  store.sessions.push({ ts: Date.now(), pct: pct, correct: correct, total: total, cat: catRec });
+  if(store.sessions.length>500) store.sessions = store.sessions.slice(-500);
+  saveStore(store);
+  best = Math.max(best, pct);
+  document.getElementById('st-best').textContent = best+'%';
+
+  show('result');
+}
+
+/* ---------- HALAMAN RIWAYAT / RAPOR ---------- */
+function fmtDate(ts){
+  const d=new Date(ts);
+  const bln=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  return d.getDate()+' '+bln[d.getMonth()]+' '+d.getFullYear()+', '+String(d.getHours()).padStart(2,'0')+'.'+String(d.getMinutes()).padStart(2,'0');
+}
+
+function showHistory(){
+  const box=document.getElementById('hist-content');
+  const S=store.sessions;
+  document.getElementById('hist-sub').textContent = (store.name?store.name+' — ':'') + S.length + ' sesi latihan tersimpan';
+
+  if(!S.length){
+    box.innerHTML='<div class="card empty"><div class="big">📭</div><p>Belum ada riwayat latihan.<br>Selesaikan satu sesi untuk mulai memantau perkembangan.</p><div style="margin-top:16px"><button class="btn btn-gold" onclick="startQuiz()">Mulai Latihan</button></div></div>';
+    show('history'); return;
+  }
+
+  const last=S[S.length-1].pct;
+  const avg=Math.round(S.reduce((a,s)=>a+s.pct,0)/S.length);
+  const bestv=S.reduce((m,s)=>Math.max(m,s.pct),0);
+  const passed=S.filter(s=>s.pct>=PASS*100).length;
+
+  let html='<div class="kpis">'
+    +'<div class="kpi"><b>'+S.length+'</b><small>SESI</small></div>'
+    +'<div class="kpi"><b>'+last+'%</b><small>TERAKHIR</small></div>'
+    +'<div class="kpi"><b>'+avg+'%</b><small>RATA-RATA</small></div>'
+    +'<div class="kpi"><b>'+bestv+'%</b><small>TERBAIK</small></div>'
+    +'</div>';
+
+  // grafik garis perkembangan
+  html+='<div class="card chart-card"><h3 class="serif">Grafik Perkembangan</h3>'
+    +'<div class="sub">Skor tiap sesi — garis emas = ambang lulus 80%. Sudah '+passed+' sesi lulus.</div>'
+    +'<div class="chartwrap">'+lineChart(S)+'</div></div>';
+
+  // tren penguasaan per bidang (rata-rata seluruh sesi)
+  const catAgg={};
+  S.forEach(s=>{Object.keys(s.cat||{}).forEach(c=>{if(!catAgg[c])catAgg[c]=[0,0];catAgg[c][0]+=s.cat[c][0];catAgg[c][1]+=s.cat[c][1];});});
+  const catKeys=Object.keys(catAgg).sort((a,b)=>(catAgg[a][0]/catAgg[a][1])-(catAgg[b][0]/catAgg[b][1]));
+  if(catKeys.length){
+    html+='<div class="card weak-card"><h3 class="serif">Penguasaan per Bidang</h3><div class="sub">Akumulasi seluruh sesi — urut dari yang paling perlu dilatih.</div>';
+    catKeys.forEach(c=>{
+      const p=Math.round(catAgg[c][0]/catAgg[c][1]*100);
+      const col=p>=80?'#2f6e4f':p>=50?'#c8932a':'#8c2f2a';
+      html+='<div class="bar"><div class="nm">'+c+'</div><div class="track"><i style="width:'+p+'%;background:'+col+'"></i></div><div class="pc">'+p+'%</div></div>';
+    });
+    html+='</div>';
+  }
+
+  // daftar sesi terbaru
+  html+='<div class="sesi-list"><h3 class="serif">Daftar Sesi</h3>';
+  S.slice().reverse().forEach((s,i)=>{
+    const win=s.pct>=PASS*100;
+    const col=win?'#2f6e4f':s.pct>=60?'#c8932a':'#8c2f2a';
+    html+='<div class="sesi">'
+      +'<div class="dot" style="background:'+col+'">'+s.pct+'</div>'
+      +'<div class="meta"><div class="top">Sesi #'+(S.length-i)+' — '+s.correct+'/'+s.total+' benar</div>'
+      +'<div class="bot">'+fmtDate(s.ts)+'</div></div>'
+      +'<div class="pill '+(win?'win':'low')+'">'+(win?'LULUS':'BELUM')+'</div>'
+      +'</div>';
+  });
+  html+='</div>';
+
+  box.innerHTML=html;
+  show('history');
+}
+
+// grafik garis SVG sederhana, responsif
+function lineChart(S){
+  const W=640,H=240,pad=36,padR=14,padT=14,padB=28;
+  const n=S.length;
+  const xs=i=> n===1 ? (pad+(W-pad-padR)/2) : pad + i*(W-pad-padR)/(n-1);
+  const ys=v=> padT + (100-v)/100*(H-padT-padB);
+  let g='<svg class="linechart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">';
+  // gridlines + label y
+  [0,25,50,75,100].forEach(v=>{
+    const y=ys(v);
+    g+='<line x1="'+pad+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="#e3d9c4" stroke-width="1"/>';
+    g+='<text x="'+(pad-8)+'" y="'+(y+4)+'" font-size="11" fill="#6b6354" text-anchor="end" font-family="Plus Jakarta Sans">'+v+'</text>';
+  });
+  // garis ambang lulus 80
+  const yp=ys(80);
+  g+='<line x1="'+pad+'" y1="'+yp+'" x2="'+(W-padR)+'" y2="'+yp+'" stroke="#c8932a" stroke-width="1.5" stroke-dasharray="5 4"/>';
+  // area + path
+  let dline='', darea='M '+xs(0)+' '+ys(S[0].pct);
+  S.forEach((s,i)=>{ const x=xs(i),y=ys(s.pct); dline+=(i?' L ':'M ')+x+' '+y; if(i)darea+=' L '+x+' '+y; });
+  darea+=' L '+xs(n-1)+' '+(H-padB)+' L '+xs(0)+' '+(H-padB)+' Z';
+  g+='<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8c876" stop-opacity=".45"/><stop offset="1" stop-color="#e8c876" stop-opacity="0"/></linearGradient></defs>';
+  g+='<path d="'+darea+'" fill="url(#ag)"/>';
+  g+='<path d="'+dline+'" fill="none" stroke="#b9831f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  // titik
+  S.forEach((s,i)=>{ const x=xs(i),y=ys(s.pct); const c=s.pct>=80?'#2f6e4f':s.pct>=60?'#c8932a':'#8c2f2a';
+    g+='<circle cx="'+x+'" cy="'+y+'" r="4.5" fill="#fff" stroke="'+c+'" stroke-width="2.5"/>';
+    if(n<=14) g+='<text x="'+x+'" y="'+(y-10)+'" font-size="10.5" fill="'+c+'" text-anchor="middle" font-weight="700" font-family="Plus Jakarta Sans">'+s.pct+'</text>';
+  });
+  g+='</svg>';
+  return g;
+}
+
+function resetData(){
+  if(confirm('Hapus SEMUA riwayat latihan di perangkat ini? Tindakan ini tidak bisa dibatalkan.')){
+    const nm=store.name;
+    store={name:nm,sessions:[]};
+    saveStore(store);
+    showHistory();
+  }
+}
+
+// inisialisasi tampilan beranda
+refreshHome();
+</script>
+</body>
+</html>
